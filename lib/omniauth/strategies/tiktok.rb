@@ -73,6 +73,17 @@ module OmniAuth
         end
       end
 
+      protected
+
+      def build_access_token
+        verifier = request.params["code"]
+        client.auth_code.get_token(
+          verifier,
+          token_params.to_hash(:symbolize_keys => true),
+          deep_symbolize(options.auth_token_params)
+        )
+      end
+
       private
 
       def prune!(hash)
